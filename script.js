@@ -1,27 +1,11 @@
 const periode = 500 //ms
 
-var substition = {
-    "é": "e",
-    "è": "e",
-    "ê": "e",
-    "ë": "e",
-    "â": "a",
-    "à": "a",
-    "î": "i",
-    "ô": "o",
-    "œ": "oe",
-    "û": "u",
-    "ù": "u",
-    "ü": "u",
-    "ç": "c"
-}
-
 var motATrouver
 var lettresTrouvees
 var nbLettres
 function nouvellePartie() {
-    motATrouver = mots[Math.floor(mots.length * Math.random())]
-    motATrouver = Array.from(motATrouver).map((lettre) => substition[lettre] || lettre)
+    motATrouver = motsATrouver[Math.floor(motsATrouver.length * Math.random())].normalize("NFD").replace(/\p{Diacritic}/gu, "")
+    motATrouver = Array.from(motATrouver)
     nbLettres = motATrouver.length
 
     lettresTrouvees = [motATrouver[0]]
@@ -69,9 +53,7 @@ function onfocus() {
 }
 
 function oninput() {
-    var lettre = this.value.toLowerCase()
-    if (substition[lettre]) lettre = substition[lettre]
-    this.value = lettre
+    this.value = this.value.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase()
     if (this.checkValidity()) {
         this.nextSibling?.focus()
     } else {
@@ -95,7 +77,7 @@ function onkeyup(event) {
 
 function onsubmit(event) {
     if (this.checkValidity()) {
-        if (mots.includes(Array.from(form.children).map((input) => input.value).join(""))) {
+        if (motsAutorises.includes(Array.from(form.children).map((input) => input.value).join(""))) {
             var inputsNonValides = Array.from(form.children)
             motATrouver.forEach((lettre, indice) => {
                 var input = this.children[indice]
@@ -127,11 +109,10 @@ function onsubmit(event) {
 
             setTimeout(() => {
                 if (nbLettresBienPlacees == nbLettres) {
-                    alert("Bien joué gros !\nUne nouvelle partie ?")
-                    nouvellePartie()
+                    if (confirm("Bien joué gros !\nUne nouvelle partie ?")) nouvellePartie()
                 } else nouvelEssai()
             }, motATrouver.length * periode)
-            
+
         } else {
             for(input of form.children) input.readOnly = true
             sonLettreMalPlacee.play()

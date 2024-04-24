@@ -1,4 +1,4 @@
-const mots = [
+const motsATrouver = [
     "abattu", "abbaye", "abetir", "abimee", "abimer", "abimes", "abject", "abolie", "abolir", "abolis",
     "abonne", "abords", "aboyer", "abrupt", "abruti", "absent", "absolu", "abusee", "abuser", "abuses",
     "abusif", "abysse", "acabit", "acacia", "acajou", "accent", "accord", "accroc", "acerbe", "achats", "acteur",
@@ -2670,5 +2670,6 @@ const mots = [
     "visualisee", "visualiser", "visualises", "vitaminees", "vitrifiees", "vivifiante", "vivifiants", "viviparite", "vocalement", "vocalisees",
     "vociferees", "voilements", "voisinages", "voituriere", "voituriers", "volatilise", "volatilite", "volcanique", "volcanisee", "volcaniser",
     "volcanises", "volubilite", "volumineux", "voluptueux", "voyageuses", "voyeurisme", "voyeuriste", "vulcanisee", "vulcaniser",
-    "vulcanises", "vulgarisee", "vulgariser", "vulgarises", "vulgarites", "vulnerable"
+    "vulcanises", "vulgarisee", "vulgariser", "vulgarises", "vulgarites", "vulnerable",
+    "toutes", "triees", "truand", "truque"
 ]

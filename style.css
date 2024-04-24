@@ -10,16 +10,17 @@ h1 {
 #grille input[type=text] {
     font-size: 2em;
     text-transform: capitalize;
-    width: 1.2em;
-    height: 1.2em;
-    padding: 0.2rem;
+    width: 1.3em;
+    height: 1.3em;
+    padding: 0.15em;
     text-align: center;
     border-radius: 0.3rem;
+    vertical-align: center;
 }
   
 .lettre-bien-placee {
-    background-image: linear-gradient(#D93526A0, #D93526A0);
-    background-clip: content-box;
+    background-image: linear-gradient(#D93526D0, #D93526D0);
+    background-origin: content-box;
 }
   
 .lettre-mal-placee {
