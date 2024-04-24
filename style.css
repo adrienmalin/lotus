@@ -1,0 +1,29 @@
+h1 {
+    text-align: center;
+}
+
+#grille {
+    width: fit-content;
+    margin: auto;
+}
+  
+#grille input[type=text] {
+    font-size: 2em;
+    text-transform: capitalize;
+    width: 1.2em;
+    height: 1.2em;
+    padding: 0.2rem;
+    text-align: center;
+    border-radius: 0.3rem;
+}
+  
+.lettre-bien-placee {
+    background-image: linear-gradient(#D93526A0, #D93526A0);
+    background-clip: content-box;
+}
+  
+.lettre-mal-placee {
+    background-image: radial-gradient(ellipse at center, #FFBF00A0 70%, transparent 70%);
+    background-origin: content-box;
+    background-repeat: no-repeat;
+}

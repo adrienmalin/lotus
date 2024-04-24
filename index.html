@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark" />
+    <title>LOTUS</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <main class="container">
+        <h1>LOTUS</h1>
+        <div id="grille"></div>
+    </main>
+
+    <div style="display: none">
+        <audio preload src="sons/lettre-non-trouve.wav" id="sonLettreNonTrouvee"></audio>
+        <audio preload src="sons/lettre-mal-place.wav" id="sonLettreMalPlacee"></audio>
+        <audio preload src="sons/lettre-bien-place.wav" id="sonLettreBienPlacee"></audio>
+    </div>
+
+    <script src="mots.js" charset="UTF-8"></script>
+    <script src="script.js" charset="UTF-8"></script>
+</body>
+</html>
