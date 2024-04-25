@@ -41,6 +41,10 @@ h1 img {
     background-repeat: no-repeat;
 }
 
+#grille input[type=text]:disabled {
+    opacity: 100%;
+}
+
 #volumeCheckbox {
     display: none;
 }

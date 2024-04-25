@@ -1,15 +1,16 @@
 const periode = 500 //ms
 
 var motATrouver
+var listeATrouver
 var lettresTrouvees
 var nbLettres
 function nouvellePartie() {
     motATrouver = motsATrouver[Math.floor(motsATrouver.length * Math.pow(Math.random(), 1.5))]
     motATrouver = motATrouver.normalize("NFD").replace(/\p{Diacritic}/gu, "")
-    motATrouver = Array.from(motATrouver)
-    nbLettres = motATrouver.length
+    listeATrouver = Array.from(motATrouver)
+    nbLettres = listeATrouver.length
 
-    lettresTrouvees = [motATrouver[0]]
+    lettresTrouvees = [listeATrouver[0]]
 
     grille.innerHTML = ""
 
@@ -19,15 +20,17 @@ function nouvellePartie() {
 var form
 var lettresATrouver
 var nbLettresBienPlacees
+var nbEssais = 0
 function nouvelEssai() {
+    nbEssais++
+
     form = document.createElement("form")
     form.action = "#"
-    form.onsubmit = onsubmit
 
-    lettresATrouver = Array.from(motATrouver)
+    lettresATrouver = Array.from(listeATrouver)
     nbLettresBienPlacees = 0
 
-    motATrouver.forEach((lettre, indice) => {
+    listeATrouver.forEach((lettre, indice) => {
         var input = document.createElement("input")
         input.type = "text"
         input.required = true
@@ -47,7 +50,18 @@ function nouvelEssai() {
 
     grille.appendChild(form)
 
-    form.children[0].focus()    
+    if (nbEssais <= 6) {
+        form.onsubmit = onsubmit
+        form.children[0].focus()
+    } else {
+        listeATrouver.forEach((lettre, indice) => {
+            var input = form.children[indice]
+            input.disabled = true
+            input.value = lettre
+        })
+        if (confirm(`Perdu ! Le mot a trouver était : ${motATrouver.toUpperCase()}.\nRéessayer ?`)) nouvellePartie()
+
+    }
 }
 
 function onfocus() {
@@ -82,7 +96,7 @@ function onsubmit(event) {
         volumeOn = volumeCheckbox.checked
         if (motsAutorises.includes(Array.from(form.children).map((input) => input.value).join(""))) {
             var inputsNonValides = Array.from(form.children)
-            motATrouver.forEach((lettre, indice) => {
+            listeATrouver.forEach((lettre, indice) => {
                 var input = this.children[indice]
                 if (input.value == lettre) {
                     if (!lettresTrouvees[indice]) lettresTrouvees[indice] = lettre
@@ -94,7 +108,7 @@ function onsubmit(event) {
                         if (volumeOn) sonLettreBienPlacee.play()
                     }, periode * indice)
                 }
-                input.readOnly = true
+                input.disabled = true
             })
 
             inputsNonValides.forEach((input, indice) => {
@@ -114,10 +128,10 @@ function onsubmit(event) {
                 if (nbLettresBienPlacees == nbLettres) {
                     if (confirm("Bien joué gros !\nUne nouvelle partie ?")) nouvellePartie()
                 } else nouvelEssai()
-            }, motATrouver.length * periode)
+            }, listeATrouver.length * periode)
 
         } else {
-            for(input of form.children) input.readOnly = true
+            for(input of form.children) input.disabled = true
             if (volumeOn) sonLettreMalPlacee.play()
             nouvelEssai()
         }
