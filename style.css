@@ -2,6 +2,15 @@ h1 {
     text-align: center;
 }
 
+h1 img {
+    background-color: var(--pico-h1-color);
+    border-radius: 100%;
+    background-origin: content-box;
+    padding: 0;
+    height: 0.7em;
+    vertical-align: baseline;
+}
+
 #grille {
     width: fit-content;
     margin: auto;
@@ -19,12 +28,11 @@ h1 {
 }
   
 .lettre-bien-placee {
-    background-image: linear-gradient(#D93526D0, #D93526D0);
-    background-origin: content-box;
+    background-color: #D93526D0;
 }
   
 .lettre-mal-placee {
     background-image: radial-gradient(ellipse at center, #FFBF00A0 70%, transparent 70%);
-    background-origin: content-box;
+    background-origin: border-box-box;
     background-repeat: no-repeat;
 }

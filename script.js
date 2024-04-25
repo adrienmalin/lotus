@@ -4,7 +4,8 @@ var motATrouver
 var lettresTrouvees
 var nbLettres
 function nouvellePartie() {
-    motATrouver = motsATrouver[Math.floor(motsATrouver.length * Math.random())].normalize("NFD").replace(/\p{Diacritic}/gu, "")
+    motATrouver = motsATrouver[Math.floor(motsATrouver.length * Math.pow(Math.random(), 1.5))]
+    motATrouver = motATrouver.normalize("NFD").replace(/\p{Diacritic}/gu, "")
     motATrouver = Array.from(motATrouver)
     nbLettres = motATrouver.length
 
@@ -34,6 +35,7 @@ function nouvelEssai() {
         input.maxLength = 1
         input.size = 1
         input.pattern = "[a-z]"
+        input.placeholder = "."
         input.onfocus = onfocus
         input.onkeydown = onkeydown
         input.oninput = oninput
