@@ -8,15 +8,31 @@
     <title>LOTUS</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"/>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
-    <link rel="manifest" href="favicons/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="icones/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icones/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icones/favicon-16x16.png">
+    <link rel="manifest" href="icones/site.webmanifest">
 </head>
 
 <body>
     <main>
-        <h1>L<img src="favicons/favicon-32x32.png" alt="O">TUS</h1>
+        <nav>
+            <ul style="position: fixed;">
+                <li>
+                    <input type="checkbox" id="volumeCheckbox" role="switch" checked/>
+                    <label for="volumeCheckbox">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="currentColor">
+                            <path d="M792-56 671-177q-25 16-53 27.5T560-131v-82q14-5 27.5-10t25.5-12L480-368v208L280-360H120v-240h128L56-792l56-56 736 736-56 56Zm-8-232-58-58q17-31 25.5-65t8.5-70q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 53-14.5 102T784-288ZM650-422l-90-90v-130q47 22 73.5 66t26.5 96q0 15-2.5 29.5T650-422ZM480-592 376-696l104-104v208Zm-80 238v-94l-72-72H200v80h114l86 86Zm-36-130Z"/>
+                        </svg>
+                    </label>
+                </li>
+            </ul>
+            <ul style="margin: auto">
+                <li>
+                    <h1>L<img src="icones/lotus.svg" alt="O">TUS</h1>
+                </li>
+            </ul>
+        </nav>
         <div id="grille"></div>
     </main>
 

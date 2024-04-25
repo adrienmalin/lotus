@@ -79,6 +79,7 @@ function onkeyup(event) {
 
 function onsubmit(event) {
     if (this.checkValidity()) {
+        volumeOn = volumeCheckbox.checked
         if (motsAutorises.includes(Array.from(form.children).map((input) => input.value).join(""))) {
             var inputsNonValides = Array.from(form.children)
             motATrouver.forEach((lettre, indice) => {
@@ -90,7 +91,7 @@ function onsubmit(event) {
                     nbLettresBienPlacees++
                     setTimeout(() => {
                         input.className = "lettre-bien-placee"
-                        sonLettreBienPlacee.play()
+                        if (volumeOn) sonLettreBienPlacee.play()
                     }, periode * indice)
                 }
                 input.readOnly = true
@@ -102,10 +103,10 @@ function onsubmit(event) {
                     delete(lettresATrouver[index])
                     setTimeout(() => {
                         input.className = "lettre-mal-placee"
-                        sonLettreMalPlacee.play()
+                        if (volumeOn) sonLettreMalPlacee.play()
                     }, periode * indice)
                 } else {
-                    setTimeout(() => sonLettreNonTrouvee.play(), periode * indice)
+                    setTimeout(() => {if (volumeOn) sonLettreNonTrouvee.play()}, periode * indice)
                 }
             })
 
@@ -117,7 +118,7 @@ function onsubmit(event) {
 
         } else {
             for(input of form.children) input.readOnly = true
-            sonLettreMalPlacee.play()
+            if (volumeOn) sonLettreMalPlacee.play()
             nouvelEssai()
         }
 
