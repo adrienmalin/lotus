@@ -1,5 +1,11 @@
+:root {
+    font-size: 125%;
+    --pico-typography-spacing-vertical: 1.1em;
+}
+
 h1 {
     text-align: center;
+    filter: drop-shadow(0.08em 0.06em #8888);
 }
 
 h1 img {
@@ -17,7 +23,7 @@ h1 img {
 }
   
 #grille input[type=text] {
-    font-size: 2em;
+    font-size: 1.5em;
     text-transform: capitalize;
     width: 1.3em;
     height: 1.3em;
@@ -33,6 +39,5 @@ h1 img {
   
 .lettre-mal-placee {
     background-image: radial-gradient(ellipse at center, #FFBF00A0 70%, transparent 70%);
-    background-origin: border-box-box;
     background-repeat: no-repeat;
 }
