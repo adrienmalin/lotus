@@ -13,7 +13,7 @@ optionsButton.onclick = function(event) {
     optionsDialog.showModal();
 }
 
-confirmOptionsButton.onclick = function(event) {
+optionsForm.onsubmit = function(event) {
     if (optionsForm.checkValidity()) {
         volumeOn = volumeCheckbox.checked
         minLettres = Math.min(minLettresInput.value, maxLettresInput.value)
