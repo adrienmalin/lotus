@@ -1,10 +1,13 @@
+const NB_ESSAIS_MAX = 6
 const periode = 500 //ms
 
 var motATrouver
 var listeATrouver
 var lettresTrouvees
 var nbLettres
+var nbEssais
 function nouvellePartie() {
+    nbEssais = 0
     motATrouver = motsATrouver[Math.floor(motsATrouver.length * Math.pow(Math.random(), 1.5))]
     motATrouver = motATrouver.normalize("NFD").replace(/\p{Diacritic}/gu, "")
     listeATrouver = Array.from(motATrouver)
@@ -20,7 +23,6 @@ function nouvellePartie() {
 var form
 var lettresATrouver
 var nbLettresBienPlacees
-var nbEssais = 0
 function nouvelEssai() {
     nbEssais++
 
@@ -50,7 +52,7 @@ function nouvelEssai() {
 
     grille.appendChild(form)
 
-    if (nbEssais <= 6) {
+    if (nbEssais <= NB_ESSAIS_MAX) {
         form.onsubmit = onsubmit
         form.children[0].focus()
     } else {
@@ -93,7 +95,6 @@ function onkeyup(event) {
 
 function onsubmit(event) {
     if (this.checkValidity()) {
-        volumeOn = volumeCheckbox.checked
         if (motsAutorises.includes(Array.from(form.children).map((input) => input.value).join(""))) {
             var inputsNonValides = Array.from(form.children)
             listeATrouver.forEach((lettre, indice) => {
@@ -126,7 +127,7 @@ function onsubmit(event) {
 
             setTimeout(() => {
                 if (nbLettresBienPlacees == nbLettres) {
-                    if (confirm("Bien joué gros !\nUne nouvelle partie ?")) nouvellePartie()
+                    if (confirm("Bien joué !\nUne nouvelle partie ?")) nouvellePartie()
                 } else nouvelEssai()
             }, listeATrouver.length * periode)
 
@@ -139,6 +140,11 @@ function onsubmit(event) {
     } else {
         this.reportValidity()
     }
+}
+
+var volumeOn
+volumeCheckbox.oninput = function(event) {
+    volumeOn = this.checked
 }
 
 nouvellePartie()
