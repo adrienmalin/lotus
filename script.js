@@ -8,7 +8,7 @@ var nbLettres
 var nbEssais
 function nouvellePartie() {
     nbEssais = 0
-    motATrouver = motsATrouver[Math.floor(motsATrouver.length * Math.pow(Math.random(), 1.5))]
+    motATrouver = motsATrouver[Math.floor(motsATrouver.length * Math.pow(Math.random(), 1.8))]
     motATrouver = motATrouver.normalize("NFD").replace(/\p{Diacritic}/gu, "")
     listeATrouver = Array.from(motATrouver)
     nbLettres = listeATrouver.length
@@ -142,7 +142,7 @@ function onsubmit(event) {
     }
 }
 
-var volumeOn
+var volumeOn = this.checked
 volumeCheckbox.oninput = function(event) {
     volumeOn = this.checked
 }
