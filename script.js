@@ -1,17 +1,44 @@
 const NB_ESSAIS_MAX = 6
 const periode = 500 //ms
 
+var volumeOn = true
+var minLettres = 6
+var maxLettres = 10
+
+window.onload = function(event) {
+    optionsDialog.showModal();
+}
+
+optionsButton.onclick = function(event) {
+    optionsDialog.showModal();
+}
+
+cancelOptionsButton.onclick = function(event) {
+    volumeCheckbox.checked = volumeOn
+    minLettresInput.value = minLettres
+    maxLettresInput.value = maxLettres
+    optionsDialog.close()
+}
+
+confirmOptionsButton.onclick = function(event) {
+    volumeOn = volumeCheckbox.checked
+    minLettres = Math.min(minLettresInput.value, maxLettresInput.value)
+    maxLettres = Math.max(minLettresInput.value, maxLettresInput.value)
+    optionsDialog.close()
+    if (!nbEssais) nouvellePartie()
+}
+
 var motATrouver
 var listeATrouver
 var lettresTrouvees
 var nbLettres
-var nbEssais
+var nbEssais = 0
 function nouvellePartie() {
     nbEssais = 0
-    motATrouver = motsATrouver[Math.floor(motsATrouver.length * Math.pow(Math.random(), 1.8))]
+    nbLettres = minLettres + Math.floor(Math.random() * (maxLettres + 1 - minLettres))
+    motATrouver = motsATrouver[nbLettres][Math.floor(motsATrouver[nbLettres].length * Math.random())]
     motATrouver = motATrouver.normalize("NFD").replace(/\p{Diacritic}/gu, "")
     listeATrouver = Array.from(motATrouver)
-    nbLettres = listeATrouver.length
 
     lettresTrouvees = [listeATrouver[0]]
 
@@ -141,10 +168,3 @@ function onsubmit(event) {
         this.reportValidity()
     }
 }
-
-var volumeOn = this.checked
-volumeCheckbox.oninput = function(event) {
-    volumeOn = this.checked
-}
-
-nouvellePartie()

@@ -1,54 +1,51 @@
 :root {
-    font-size: 125%;
+  font-size: 125%;
+}
+
+nav button svg {
+  display: block;
 }
 
 h1 {
-    text-align: center;
-    filter: drop-shadow(0.08em 0.06em #8888);
+  text-align: center;
+  filter: drop-shadow(0.08em 0.06em #8888);
 }
 
-h1 img {
-    background-color: var(--pico-h1-color);
-    border-radius: 100%;
-    background-origin: content-box;
-    padding: 0;
-    height: 0.75em;
-    vertical-align: baseline;
+h1 img,
+h3 img {
+  background-color: var(--pico-h1-color);
+  border-radius: 100%;
+  background-origin: content-box;
+  padding: 0;
+  height: 0.75em;
+  vertical-align: baseline;
 }
 
 #grille {
-    width: fit-content;
-    margin: auto;
+  width: fit-content;
+  margin: auto;
 }
-  
+
 #grille input[type=text] {
-    font-size: 1.5em;
-    text-transform: capitalize;
-    width: 1.3em;
-    height: 1.3em;
-    padding: 0.15em;
-    text-align: center;
-    border-radius: 0.3rem;
-    vertical-align: text-top;
+  font-size: 1.5em;
+  text-transform: capitalize;
+  width: 1.3em;
+  height: 1.3em;
+  padding: 0.15em;
+  text-align: center;
+  border-radius: 0.3rem;
+  vertical-align: text-top;
 }
-  
+
 .lettre-bien-placee {
-    background-color: #D93526D0;
+  background-color: #D93526D0;
 }
-  
+
 .lettre-mal-placee {
-    background-image: radial-gradient(ellipse at center, #FFBF00A0 70%, transparent 70%);
-    background-repeat: no-repeat;
+  background-image: radial-gradient(ellipse at center, #FFBF00A0 70%, transparent 70%);
+  background-repeat: no-repeat;
 }
 
 #grille input[type=text]:disabled {
-    opacity: 100%;
-}
-
-#volumeCheckbox {
-    display: none;
-}
-
-#volumeCheckbox:checked ~ label svg path {
-    d: path("M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320ZM400-606l-86 86H200v80h114l86 86v-252ZM300-480Z");
+  opacity: 100%;
 }
