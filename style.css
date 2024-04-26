@@ -12,7 +12,7 @@ h1 {
 }
 
 h1 img,
-h3 img {
+h2 img {
   background-color: var(--pico-h1-color);
   border-radius: 100%;
   background-origin: content-box;
@@ -21,12 +21,18 @@ h3 img {
   vertical-align: baseline;
 }
 
+label.option {
+  display: flex;
+  align-items: baseline;
+  gap: 1em;
+}
+
 #grille {
   width: fit-content;
   margin: auto;
 }
 
-#grille input[type=text] {
+input.lettre {
   font-size: 1.5em;
   text-transform: capitalize;
   width: 1.3em;
@@ -37,15 +43,15 @@ h3 img {
   vertical-align: text-top;
 }
 
-.lettre-bien-placee {
+input.bien-placee {
   background-color: #D93526D0;
 }
 
-.lettre-mal-placee {
+input.mal-placee {
   background-image: radial-gradient(ellipse at center, #FFBF00A0 70%, transparent 70%);
   background-repeat: no-repeat;
 }
 
-#grille input[type=text]:disabled {
+input.lettre:disabled {
   opacity: 100%;
 }

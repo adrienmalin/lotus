@@ -13,19 +13,16 @@ optionsButton.onclick = function(event) {
     optionsDialog.showModal();
 }
 
-cancelOptionsButton.onclick = function(event) {
-    volumeCheckbox.checked = volumeOn
-    minLettresInput.value = minLettres
-    maxLettresInput.value = maxLettres
-    optionsDialog.close()
-}
-
 confirmOptionsButton.onclick = function(event) {
-    volumeOn = volumeCheckbox.checked
-    minLettres = Math.min(minLettresInput.value, maxLettresInput.value)
-    maxLettres = Math.max(minLettresInput.value, maxLettresInput.value)
-    optionsDialog.close()
-    if (!nbEssais) nouvellePartie()
+    if (optionsForm.checkValidity()) {
+        volumeOn = volumeCheckbox.checked
+        minLettres = Math.min(minLettresInput.value, maxLettresInput.value)
+        maxLettres = Math.max(minLettresInput.value, maxLettresInput.value)
+        optionsDialog.close()
+        if (!nbEssais) nouvellePartie()
+    } else {
+        optionsForm.reportValidity()
+    }
 }
 
 var motATrouver
@@ -68,6 +65,7 @@ function nouvelEssai() {
         input.size = 1
         input.pattern = "[a-z]"
         input.placeholder = "."
+        input.classList.add("lettre")
         input.onfocus = onfocus
         input.onkeydown = onkeydown
         input.oninput = oninput
@@ -132,7 +130,7 @@ function onsubmit(event) {
                     delete(inputsNonValides[indice])
                     nbLettresBienPlacees++
                     setTimeout(() => {
-                        input.className = "lettre-bien-placee"
+                        input.classList.add("bien-placee")
                         if (volumeOn) sonLettreBienPlacee.play()
                     }, periode * indice)
                 }
@@ -144,7 +142,7 @@ function onsubmit(event) {
                 if (index >= 0) {
                     delete(lettresATrouver[index])
                     setTimeout(() => {
-                        input.className = "lettre-mal-placee"
+                        input.classList.add("mal-placee")
                         if (volumeOn) sonLettreMalPlacee.play()
                     }, periode * indice)
                 } else {

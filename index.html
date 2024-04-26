@@ -19,29 +19,40 @@
     <dialog id="optionsDialog">
         <article>
             <header>
-                <h3>L<img src="icones/lotus.svg" alt="O">TUS</h3>
+                <h2>L<img src="icones/lotus.svg" alt="O">TUS</h2>
             </header>
             <form id="optionsForm" action="#">
-                <fieldset>
-                    <label>
-                        <input id="volumeCheckbox" type="checkbox" role="switch" checked/>
-                        Son
+                <fieldset class="grid">
+                    <legend>
+                        Trouvez des mot comprenant entre
+                    </legend>
+                    <label class="option">
+                        <input type="number" id="minLettresInput" min="6" max="10" value="6" size="2" required/>
+                        et
+                    </label>
+                    <label class="option">
+                        <input type="number" id="maxLettresInput" min="6" max="10" value="10" size="2" required/>
+                        lettres.
                     </label>
                 </fieldset>
-                <fieldset class="grid">
-                    <legend>Nombre de lettres des mots à trouver</legend>
-                    <label>
-                        entre
-                        <input type="number" id="minLettresInput" min="6" max="10" value="6"/>
+                <fieldset>
+                    <label class="option">
+                        <input class="lettre mal-placee" disabled>
+                        indique une lettre se trouvant ailleurs dans le mot et
                     </label>
-                    <label>
-                        et
-                        <input type="number" id="maxLettresInput" min="6" max="10" value="10"/>
+                    <label class="option">
+                        <input class="lettre bien-placee" disabled>
+                        une lettre bien placée.
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <label for="volumeCheckbox" style="align-items: end;">
+                        <input id="volumeCheckbox" type="checkbox" role="switch" checked/>
+                        Effets sonores
                     </label>
                 </fieldset>
             </form>
             <footer>
-                <button id="cancelOptionsButton" class="secondary">Annuler</button>
                 <button id="confirmOptionsButton">OK</button>
             </footer>
         </article>
