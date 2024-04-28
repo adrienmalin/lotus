@@ -6,7 +6,7 @@ nav button svg {
   display: block;
 }
 
-h1 {
+h1, h2 {
   text-align: center;
   filter: drop-shadow(0.08em 0.06em #8888);
 }

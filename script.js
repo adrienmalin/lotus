@@ -1,5 +1,5 @@
 const NB_ESSAIS_MAX = 6
-const periode = 500 //ms
+const periode = 400 //ms
 
 var volumeOn = true
 var minLettres = 6
@@ -16,8 +16,8 @@ optionsButton.onclick = function(event) {
 optionsForm.onsubmit = function(event) {
     if (optionsForm.checkValidity()) {
         volumeOn = volumeCheckbox.checked
-        minLettres = Math.min(minLettresInput.value, maxLettresInput.value)
-        maxLettres = Math.max(minLettresInput.value, maxLettresInput.value)
+        minLettres = minLettresInput.valueAsNumber
+        maxLettres = maxLettresInput.valueAsNumber
         optionsDialog.close()
         if (!nbEssais) nouvellePartie()
     } else {
@@ -32,7 +32,7 @@ var nbLettres
 var nbEssais = 0
 function nouvellePartie() {
     nbEssais = 0
-    nbLettres = minLettres + Math.floor(Math.random() * (maxLettres + 1 - minLettres))
+    nbLettres = minLettres + Math.floor(Math.random() * (Math.abs(maxLettres - minLettres) + 1))
     motATrouver = motsATrouver[nbLettres][Math.floor(motsATrouver[nbLettres].length * Math.random())]
     motATrouver = motATrouver.normalize("NFD").replace(/\p{Diacritic}/gu, "")
     listeATrouver = Array.from(motATrouver)
@@ -79,20 +79,28 @@ function nouvelEssai() {
 
     if (nbEssais <= NB_ESSAIS_MAX) {
         form.onsubmit = onsubmit
-        form.children[0].focus()
+        form.children[0].disabled = true
+        form.children[1].focus()
     } else {
         listeATrouver.forEach((lettre, indice) => {
             var input = form.children[indice]
             input.disabled = true
             input.value = lettre
         })
-        if (confirm(`Perdu ! Le mot a trouver était : ${motATrouver.toUpperCase()}.\nRéessayer ?`)) nouvellePartie()
+        play(sonPerdu)
+        if (confirm(`Perdu ! Le mot à trouver était : ${motATrouver.toUpperCase()}.\nRéessayer ?`)) nouvellePartie()
 
     }
 }
 
 function onfocus() {
     this.select()
+}
+
+function onkeydown(event) {
+    if (event.key == "Backspace" && this.value == "") {
+        this.previousSibling?.focus()
+    }
 }
 
 function oninput() {
@@ -104,18 +112,19 @@ function oninput() {
     }
 }
 
-function onkeydown(event) {
-    if (event.key == "Backspace" && this.value == "") {
-        this.previousSibling?.focus()
-    }
-}
-
 function onkeyup(event) {
     switch(event.key) {
         case "Enter": form.onsubmit(); break
         case "ArrowLeft": this.previousSibling?.focus(); break
         case "ArrowRight": this.nextSibling?.focus(); break
+        case "Home": form.children[0].focus(); break
+        case "End": form.children[nbLettres-1].focus(); break
     }
+}
+
+function play(son) {
+    son.currentTime = 0
+    son.play()
 }
 
 function onsubmit(event) {
@@ -131,7 +140,7 @@ function onsubmit(event) {
                     nbLettresBienPlacees++
                     setTimeout(() => {
                         input.classList.add("bien-placee")
-                        if (volumeOn) sonLettreBienPlacee.play()
+                        if (volumeOn) play(sonLettreBienPlacee)
                     }, periode * indice)
                 }
                 input.disabled = true
@@ -143,22 +152,23 @@ function onsubmit(event) {
                     delete(lettresATrouver[index])
                     setTimeout(() => {
                         input.classList.add("mal-placee")
-                        if (volumeOn) sonLettreMalPlacee.play()
+                        if (volumeOn) play(sonLettreMalPlacee)
                     }, periode * indice)
                 } else {
-                    setTimeout(() => {if (volumeOn) sonLettreNonTrouvee.play()}, periode * indice)
+                    setTimeout(() => {if (volumeOn) play(sonLettreNonTrouvee)}, periode * indice)
                 }
             })
 
             setTimeout(() => {
                 if (nbLettresBienPlacees == nbLettres) {
+                    play(sonMotTrouve)
                     if (confirm("Bien joué !\nUne nouvelle partie ?")) nouvellePartie()
                 } else nouvelEssai()
             }, listeATrouver.length * periode)
 
         } else {
             for(input of form.children) input.disabled = true
-            if (volumeOn) sonLettreMalPlacee.play()
+            if (volumeOn) play(sonLettreNonTrouvee)
             nouvelEssai()
         }
 
