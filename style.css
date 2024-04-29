@@ -1,14 +1,22 @@
-:root {
-  font-size: 125%;
+nav ul {
+  align-items: start;
 }
 
 nav button svg {
   display: block;
 }
 
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 2.1em;
+}
+
 h1, h2 {
   text-align: center;
-  filter: drop-shadow(0.08em 0.06em #8888);
+  text-shadow: 0.08em 0.06em #8888;
 }
 
 h1 img,
@@ -19,6 +27,7 @@ h2 img {
   padding: 0;
   height: 0.75em;
   vertical-align: baseline;
+  filter: drop-shadow(0.08em 0.06em #8888);
 }
 
 label.option {
@@ -33,10 +42,11 @@ label.option {
 }
 
 input.lettre {
-  font-size: 1.5em;
+  font-size: 1.6em;
+  font-weight: bold;
   text-transform: capitalize;
-  width: 1.3em;
-  height: 1.3em;
+  width: 1.5em;
+  height: 1.5em;
   padding: 0.15em;
   text-align: center;
   border-radius: 0.3rem;

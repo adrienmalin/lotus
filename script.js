@@ -89,7 +89,7 @@ function nouvelEssai() {
         })
         play(sonPerdu)
         if (confirm(`Perdu ! Le mot à trouver était : ${motATrouver.toUpperCase()}.\nRéessayer ?`)) nouvellePartie()
-
+        else nbEssais = 0
     }
 }
 
@@ -175,4 +175,9 @@ function onsubmit(event) {
     } else {
         this.reportValidity()
     }
+}
+
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js');
 }
