@@ -1,23 +1,21 @@
 const NB_ESSAIS_MAX = 6
 const periode = 400 //ms
 
-var volumeOn = true
-var minLettres = 6
-var maxLettres = 10
-
 window.onload = function(event) {
-    optionsDialog.showModal();
+    confirmOptionsButton.innerHTML = "Jouer"
+    confirmOptionsButton.disabled = false
 }
 
 optionsButton.onclick = function(event) {
     optionsDialog.showModal();
 }
 
+var volumeOn = true
+var nbLettres = 8
 optionsForm.onsubmit = function(event) {
     if (optionsForm.checkValidity()) {
         volumeOn = volumeCheckbox.checked
-        minLettres = minLettresInput.valueAsNumber
-        maxLettres = maxLettresInput.valueAsNumber
+        nbLettres = nbLettresInput.valueAsNumber
         optionsDialog.close()
         if (!nbEssais) nouvellePartie()
     } else {
@@ -28,11 +26,9 @@ optionsForm.onsubmit = function(event) {
 var motATrouver
 var listeATrouver
 var lettresTrouvees
-var nbLettres
 var nbEssais = 0
 function nouvellePartie() {
     nbEssais = 0
-    nbLettres = minLettres + Math.floor(Math.random() * (Math.abs(maxLettres - minLettres) + 1))
     motATrouver = motsATrouver[nbLettres][Math.floor(motsATrouver[nbLettres].length * Math.random())]
     motATrouver = motATrouver.normalize("NFD").replace(/\p{Diacritic}/gu, "")
     listeATrouver = Array.from(motATrouver)

@@ -16,22 +16,16 @@
 
 <body>
 
-    <dialog id="optionsDialog">
+    <dialog id="optionsDialog" open>
         <article>
             <header>
                 <h2>L<img src="icones/lotus.svg" alt="O">TUS</h2>
             </header>
             <form id="optionsForm" action="#" method="dialog">
-                <fieldset class="grid">
-                    <legend>
-                        Trouvez des mot comprenant entre
-                    </legend>
+                <fieldset>
                     <label class="option">
-                        <input type="number" id="minLettresInput" min="6" max="10" value="6" size="2" required/>
-                        et
-                    </label>
-                    <label class="option">
-                        <input type="number" id="maxLettresInput" min="6" max="10" value="10" size="2" required/>
+                        Trouvez des mot de
+                        <input type="number" id="nbLettresInput" min="6" max="10" value="8" size="2" step="1" required/>
                         lettres.
                     </label>
                 </fieldset>
@@ -46,14 +40,16 @@
                     </label>
                 </fieldset>
                 <fieldset>
-                    <label for="volumeCheckbox" style="align-items: end;">
+                    <label for="volumeCheckbox" style="align-items: end;" class="option">
                         <input id="volumeCheckbox" type="checkbox" role="switch" checked/>
                         Effets sonores
                     </label>
                 </fieldset>
             </form>
             <footer>
-                <button id="confirmOptionsButton" type="submit" form="optionsForm">Jouer</button>
+                <button id="confirmOptionsButton" type="submit" form="optionsForm" disabled>
+                    <div aria-busy="true"></div>
+                </button>
             </footer>
         </article>
     </dialog>

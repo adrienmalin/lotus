@@ -34,6 +34,15 @@ label.option {
   display: flex;
   align-items: baseline;
   gap: 1em;
+  width: 100%;;
+}
+
+label.option * {
+  width: auto;
+}
+
+[type="checkbox"][role="switch"] {
+  margin: 0;
 }
 
 #grille {
