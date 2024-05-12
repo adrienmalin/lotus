@@ -172,8 +172,3 @@ function onsubmit(event) {
         this.reportValidity()
     }
 }
-
-
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js');
-}
