@@ -83,9 +83,12 @@ function nouvelEssai() {
             input.disabled = true
             input.value = lettre
         })
-        play(sonPerdu)
-        if (confirm(`Perdu ! Le mot à trouver était : ${motATrouver.toUpperCase()}.\nRéessayer ?`)) nouvellePartie()
-        else nbEssais = 0
+        sonPerdu.onended = function() {
+            if (confirm(`Perdu ! Le mot à trouver était : ${motATrouver.toUpperCase()}.\nRéessayer ?`)) nouvellePartie()
+            else nbEssais = 0
+        }
+        if (volumeOn) play(sonPerdu)
+        else sonPerdu.onended()
     }
 }
 
@@ -123,6 +126,10 @@ function play(son) {
     son.play()
 }
 
+sonMotTrouve.onended = function(event) {
+    if (confirm("Bien joué !\nUne nouvelle partie ?")) nouvellePartie()
+}
+
 function onsubmit(event) {
     if (this.checkValidity()) {
         if (motsAutorises.includes(Array.from(form.children).map((input) => input.value).join(""))) {
@@ -157,8 +164,8 @@ function onsubmit(event) {
 
             setTimeout(() => {
                 if (nbLettresBienPlacees == nbLettres) {
-                    play(sonMotTrouve)
-                    if (confirm("Bien joué !\nUne nouvelle partie ?")) nouvellePartie()
+                    if (volumeOn) play(sonMotTrouve)
+                    else sonMotTrouve.onended()
                 } else nouvelEssai()
             }, listeATrouver.length * periode)
 
@@ -172,3 +179,4 @@ function onsubmit(event) {
         this.reportValidity()
     }
 }
+
