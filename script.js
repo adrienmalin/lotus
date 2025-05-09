@@ -40,6 +40,13 @@ function nouvellePartie() {
     nouvelEssai()
 }
 
+function perdu() {
+    if (confirm(`Perdu ! Le mot à trouver était : ${motATrouver.toUpperCase()}.\nRéessayer ?`)) nouvellePartie()
+    else nbEssais = 0
+}
+    
+sonPerdu.onended = perdu
+
 var form
 var lettresATrouver
 var nbLettresBienPlacees
@@ -83,12 +90,8 @@ function nouvelEssai() {
             input.disabled = true
             input.value = lettre
         })
-        sonPerdu.onended = function() {
-            if (confirm(`Perdu ! Le mot à trouver était : ${motATrouver.toUpperCase()}.\nRéessayer ?`)) nouvellePartie()
-            else nbEssais = 0
-        }
         if (volumeOn) play(sonPerdu)
-        else sonPerdu.onended()
+        else perdu()
     }
 }
 
@@ -126,9 +129,11 @@ function play(son) {
     son.play()
 }
 
-sonMotTrouve.onended = function(event) {
+function gagne() {
     if (confirm("Bien joué !\nUne nouvelle partie ?")) nouvellePartie()
 }
+
+sonMotTrouve.onended = gagne
 
 function onsubmit(event) {
     if (this.checkValidity()) {
@@ -157,15 +162,15 @@ function onsubmit(event) {
                         input.classList.add("mal-placee")
                         if (volumeOn) play(sonLettreMalPlacee)
                     }, periode * indice)
-                } else {
-                    setTimeout(() => {if (volumeOn) play(sonLettreNonTrouvee)}, periode * indice)
+                } else if (volumeOn) {
+                    setTimeout(() => play(sonLettreNonTrouvee), periode * indice)
                 }
             })
 
             setTimeout(() => {
                 if (nbLettresBienPlacees == nbLettres) {
                     if (volumeOn) play(sonMotTrouve)
-                    else sonMotTrouve.onended()
+                    else gagne()
                 } else nouvelEssai()
             }, listeATrouver.length * periode)
 
