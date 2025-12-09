@@ -121,7 +121,9 @@ function onkeyup(event) {
         case "ArrowRight": this.nextSibling?.focus(); break
         case "Home": form.children[0].focus(); break
         case "End": form.children[nbLettres-1].focus(); break
+        default: return
     }
+    event.preventDefault()
 }
 
 function play(son) {

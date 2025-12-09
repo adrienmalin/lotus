@@ -17,17 +17,27 @@ h2 {
 h1, h2 {
   text-align: center;
   text-shadow: 0.08em 0.06em #8888;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 img,
-h2 img {
+h2 img,
+h2 div {
   background-color: currentColor;
   border-radius: 100%;
   background-origin: content-box;
-  padding: 0;
-  height: 0.75em;
-  vertical-align: baseline;
+  padding: 0.08em;
+  height: 1.2em;
+  width: 1.2em;
   filter: drop-shadow(0.08em 0.06em #8888);
+  font-size: 0.6em;
+  display: inline-flex;
+  justify-content: center;
+  align-items: end;
+  vertical-align: baseline;
+  margin-top: 0.2em;
 }
 
 label.option {
