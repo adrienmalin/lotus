@@ -1,58 +1,82 @@
 const NB_ESSAIS_MAX = 6
 const periode = 400 //ms
 
-var motsAutorises
-var motsATrouver
-
 window.onload = function(event) {
-    fetch("motsAutorises.txt")
-        .then(response => response.text())
-        .then(data => motsAutorises = data.split("\n"))
-        .then(jouer)
-
-    fetch("motsATrouver.txt")
-        .then(response => response.text())
-        .then(data => {
-            motsATrouver = []
-            data.split("\n").forEach(mot => {
-                var longeur = mot.length
-                if (!motsATrouver[longeur]) motsATrouver[longeur] = []
-                motsATrouver[longeur].push(mot)
-            })
-        })
-        .then(jouer)
-}
-
-function jouer() {
-    if (motsAutorises && motsATrouver) {
-        confirmOptionsButton.innerHTML = "Jouer"
-        confirmOptionsButton.disabled = false
-    }
-}
-
-optionsButton.onclick = function(event) {
-    optionsDialog.showModal();
+    confirmOptionsButton.ariaBusy = false
+    afficheOptions()
 }
 
 var volumeOn = true
+var nbEssais = 0
+function afficheOptions() {
+    if (nbEssais) {
+        nbLettresInput.disabled = true
+        confirmOptionsButton.innerHTML = "Continuer"
+    } else {
+        nbLettresInput.disabled = false
+        confirmOptionsButton.innerHTML = "Jouer"
+    }
+    confirmOptionsButton.disabled = false
+    confirmOptionsButton.innerHTML = nbEssais? "Continuer" : "Jouer"
+    optionsDialog.showModal() 
+}
+
+optionsButton.onclick = afficheOptions
+
 var nbLettres = 8
+var motsAutorises = []
+var motsATrouver  = []
 optionsForm.onsubmit = function(event) {
+    event.preventDefault()
+
     if (optionsForm.checkValidity()) {
         volumeOn = volumeCheckbox.checked
         nbLettres = nbLettresInput.valueAsNumber
-        optionsDialog.close()
-        if (!nbEssais) nouvellePartie()
+
+        if (!chargementTermine()) {
+            confirmOptionsButton.innerHTML = "Chargement..."
+            confirmOptionsButton.disabled = true
+            confirmOptionsButton.ariaBusy = true
+
+            if (!motsATrouver[nbLettres]) {
+                fetch(`motsATrouver${nbLettres}.txt`)
+                    .then(response => response.text())
+                    .then(data => motsATrouver[nbLettres] = data.split("\n"))
+                    .then(chargementTermine)
+            }
+            
+            if (!motsAutorises[nbLettres]) {
+                fetch(`motsAutorises${nbLettres}.txt`)
+                    .then(response => response.text())
+                    .then(data => motsAutorises[nbLettres] = data.split("\n"))
+                    .then(chargementTermine)
+            }
+        }
     } else {
         optionsForm.reportValidity()
     }
 }
 
+function chargementTermine() {
+    if (motsAutorises[nbLettres] && motsATrouver[nbLettres]) {
+        optionsDialog.close()
+        confirmOptionsButton.innerHTML = "Continuer"
+        confirmOptionsButton.disabled = false
+        confirmOptionsButton.ariaBusy = false
+
+        if (!nbEssais) nouvellePartie()
+        return true
+    } else {
+        return false
+    }
+}
+
+var nbLettres
 var motATrouver
 var listeATrouver
 var lettresTrouvees
 var nbEssais = 0
 function nouvellePartie() {
-    nbEssais = 0
     motATrouver = motsATrouver[nbLettres][Math.floor(motsATrouver[nbLettres].length * Math.random())]
     motATrouver = motATrouver.normalize("NFD").replace(/\p{Diacritic}/gu, "")
     listeATrouver = Array.from(motATrouver)
@@ -65,7 +89,7 @@ function nouvellePartie() {
 }
 
 function perdu() {
-    if (confirm(`Perdu ! Le mot à trouver était : ${motATrouver.toUpperCase()}.\nRéessayer ?`)) nouvellePartie()
+    if (confirm(`Perdu ! Le mot à trouver était : ${motATrouver.toUpperCase()}.\nRéessayer ?`)) afficheOptions()
     else nbEssais = 0
 }
     
@@ -116,6 +140,7 @@ function nouvelEssai() {
         })
         if (volumeOn) play(sonPerdu)
         else perdu()
+        nbEssais = 0
     }
 }
 
@@ -156,14 +181,14 @@ function play(son) {
 }
 
 function gagne() {
-    if (confirm("Bien joué !\nUne nouvelle partie ?")) nouvellePartie()
+    if (confirm("Bien joué !\nUne nouvelle partie ?")) afficheOptions()
 }
 
 sonMotTrouve.onended = gagne
 
 function onsubmit(event) {
     if (this.checkValidity()) {
-        if (motsAutorises.includes(Array.from(form.children).map((input) => input.value).join(""))) {
+        if (motsAutorises[nbLettres].includes(Array.from(form.children).map((input) => input.value).join(""))) {
             var inputsNonValides = Array.from(form.children)
             listeATrouver.forEach((lettre, indice) => {
                 var input = this.children[indice]
@@ -195,6 +220,7 @@ function onsubmit(event) {
 
             setTimeout(() => {
                 if (nbLettresBienPlacees == nbLettres) {
+                    nbEssais = 0
                     if (volumeOn) play(sonMotTrouve)
                     else gagne()
                 } else nouvelEssai()
