@@ -1,9 +1,33 @@
 const NB_ESSAIS_MAX = 6
 const periode = 400 //ms
 
+var motsAutorises
+var motsATrouver
+
 window.onload = function(event) {
-    confirmOptionsButton.innerHTML = "Jouer"
-    confirmOptionsButton.disabled = false
+    fetch("motsAutorises.txt")
+        .then(response => response.text())
+        .then(data => motsAutorises = data.split("\n"))
+        .then(jouer)
+
+    fetch("motsATrouver.txt")
+        .then(response => response.text())
+        .then(data => {
+            motsATrouver = []
+            data.split("\n").forEach(mot => {
+                var longeur = mot.length
+                if (!motsATrouver[longeur]) motsATrouver[longeur] = []
+                motsATrouver[longeur].push(mot)
+            })
+        })
+        .then(jouer)
+}
+
+function jouer() {
+    if (motsAutorises && motsATrouver) {
+        confirmOptionsButton.innerHTML = "Jouer"
+        confirmOptionsButton.disabled = false
+    }
 }
 
 optionsButton.onclick = function(event) {
